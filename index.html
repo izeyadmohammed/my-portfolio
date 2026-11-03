@@ -396,3 +396,60 @@ loadFromSupabase().then(() => render());
 <script src="menu.js"></script>
 </body>
 </html>
+
+<!-- ===== زر الهامبرجر الثابت ===== -->
+<style>
+  #fixed-hamburger {
+    display: none; /* مخفي في الكمبيوتر */
+    position: fixed;
+    top: 15px;
+    right: 15px; /* في اليمين عشان العربي */
+    z-index: 99999;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  #fixed-hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    margin: 5px 0;
+    transition: all 0.3s;
+  }
+  #fixed-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  #fixed-hamburger.active span:nth-child(2) { opacity: 0; }
+  #fixed-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    #fixed-hamburger { display: block; }
+    /* إخفاء القائمة الأصلية لما تكون مقفولة، وإظهارها لما نضغط */
+    header nav { display: none !important; }
+    header nav.mobile-open { display: flex !important; flex-direction: column; position: absolute; top: 60px; right: 10px; background: var(--surface); padding: 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999; }
+  }
+</style>
+
+<script>
+  setTimeout(function() {
+    // 1. إنشاء الزر
+    if (!document.getElementById('fixed-hamburger')) {
+      var btn = document.createElement('button');
+      btn.id = 'fixed-hamburger';
+      btn.innerHTML = '<span></span><span></span><span></span>';
+      document.body.appendChild(btn);
+
+      // 2. ربط الزر بالقائمة
+      btn.onclick = function() {
+        var nav = document.querySelector('header nav');
+        if (nav) {
+          nav.classList.toggle('mobile-open');
+          btn.classList.toggle('active');
+        }
+      };
+    }
+  }, 1000); // بنستنى ثانية عشان نتأكد إن الموقع حمل بالكامل
+</script>
+<!-- ===== نهاية الهامبرجر ===== -->
