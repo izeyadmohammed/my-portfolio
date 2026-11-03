@@ -181,7 +181,6 @@ function render() {
         <a href="#contact">${isAr?'تواصل':'Contact'}</a>
       </nav>
       <div class="tools">
-        <a href="cv.html" class="btn small primary" style="display:flex;align-items:center;gap:5px;text-decoration:none;"><i class="fa-solid fa-file-pdf"></i> ${isAr?'السيرة الذاتية':'CV'}</a>
         <button class="btn small" onclick="toggleLang()">${isAr?'EN':'ع'}</button>
         <button class="btn small" onclick="toggleTheme()">🌓</button>
       </div>
@@ -193,7 +192,7 @@ function render() {
         <h1><span>${name}</span></h1>
         <div class="role">${role}</div>
         <p class="tag">${tag}</p>
-        <a href="#contact" class="btn primary">${isAr?'تواصل معي':'Contact Me'}</a>
+        <a href="cv.html" class="btn primary" style="display:inline-flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf"></i> ${isAr?'السيرة الذاتية (CV)':'My CV'}</a>
       </div></section>
 
       <section id="about"><div class="wrap" style="text-align:center">
