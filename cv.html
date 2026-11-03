@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeyad Mohamed | CV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --primary: #6d4aff; --secondary: #ff5fa2; --bg: #0c0c18; --surface: #16162a; --text: #f2f2fb; --muted: #a3a3c2; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 40px 20px; display: flex; justify-content: center; }
+    
+    .cv-container { width: 100%; max-width: 900px; background: var(--surface); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    
+    /* Header */
+    .header { padding: 50px; background: linear-gradient(135deg, rgba(109,74,255,0.1), rgba(255,95,162,0.05)); border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; }
+    .header h1 { font-size: 42px; font-weight: 800; margin-bottom: 5px; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+    .header h2 { font-size: 20px; color: var(--muted); font-weight: 600; margin-bottom: 20px; }
+    .contact-info { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: var(--muted); }
+    .contact-info span { display: flex; align-items: center; gap: 8px; }
+    .contact-info i { color: var(--primary); }
+
+    /* Layout */
+    .content { display: flex; flex-direction: column; padding: 50px; gap: 40px; }
+    @media (min-width: 768px) { .content { flex-direction: row; } .left-col { flex: 2; } .right-col { flex: 1; } }
+    
+    /* Sections */
+    .section { margin-bottom: 35px; }
+    .section-title { font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+
+    /* Items */
+    .item { margin-bottom: 25px; }
+    .item h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .item h4 { font-size: 15px; font-weight: 600; color: var(--secondary); margin-bottom: 8px; }
+    .item p { font-size: 14px; color: var(--muted); }
+    .item ul { padding-left: 20px; margin-top: 8px; font-size: 14px; color: var(--muted); }
+    .item ul li { margin-bottom: 5px; }
+
+    /* Skills */
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tags span { background: rgba(109,74,255,0.1); border: 1px solid rgba(109,74,255,0.2); color: var(--text); padding: 5px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+
+    /* Print Button */
+    .print-btn { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 50px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(109,74,255,0.4); display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+    .print-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(109,74,255,0.6); }
+
+    /* Print Settings */
+    @media print {
+      body { background: white; color: black; padding: 0; }
+      .cv-container { box-shadow: none; border: none; max-width: 100%; border-radius: 0; }
+      .header { background: white; border-bottom: 2px solid #eee; padding: 30px; }
+      .header h1 { color: black; -webkit-text-fill-color: black; }
+      .header h2, .contact-info, .item p, .item ul { color: #444; }
+      .content { padding: 30px; }
+      .section-title { color: #333; }
+      .section-title::after { background: #ddd; }
+      .item h3 { color: black; }
+      .item h4 { color: #555; }
+      .skill-tags span { border: 1px solid #ccc; background: #f9f9f9; color: #333; }
+      .print-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cv-container">
+    <header class="header">
+      <h1>Zeyad Mohamed</h1>
+      <h2>Full-Stack Developer</h2>
+      <div class="contact-info">
+        <span><i class="fa-solid fa-envelope"></i> number9138@gmail.com</span>
+        <span><i class="fa-solid fa-phone"></i> +20 112 634 6329</span>
+        <span><i class="fa-brands fa-github"></i> github.com/izeyadmohammed</span>
+        <span><i class="fa-solid fa-globe"></i> sharh.hostless.site</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="left-col">
+        
+        <div class="section">
+          <div class="section-title">Summary</div>
+          <p style="font-size: 15px; color: var(--muted);">Passionate Full-Stack Developer and Founder of "Sharhthalk" educational platform. Skilled in building fast, responsive, and secure web applications using modern JavaScript frameworks and Supabase. Dedicated to creating seamless user experiences and solving complex problems.</p>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Experience</div>
+          
+          <div class="item">
+            <h3>Founder & Full-Stack Developer</h3>
+            <h4>Sharhthalk Platform | 2024 - Present</h4>
+            <ul>
+              <li>Designed and developed a complete Learning Management System (LMS) from scratch.</li>
+              <li>Built a secure authentication system with role-based access control (Admin, Teacher, Student).</li>
+              <li>Implemented a digital wallet, coupon codes, and secure exam submission system.</li>
+              <li>Developed an admin dashboard for managing users, courses, and platform settings.</li>
+            </ul>
+          </div>
+
+          <div class="item">
+            <h3>Personal Portfolio</h3>
+            <h4>Freelance | 2024</h4>
+            <ul>
+              <li>Created a modern, responsive personal portfolio website to showcase projects and skills.</li>
+              <li>Integrated Supabase backend for dynamic content management.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="right-col">
+        
+        <div class="section">
+          <div class="section-title">Skills</div>
+          <div class="skill-tags">
+            <span>JavaScript (ES6+)</span>
+            <span>HTML5 & CSS3</span>
+            <span>Tailwind CSS</span>
+            <span>Supabase</span>
+            <span>PostgreSQL</span>
+            <span>Git & GitHub</span>
+            <span>REST APIs</span>
+            <span>UI/UX Design</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Education</div>
+          <div class="item">
+            <h3>High School Student</h3>
+            <h4>Egypt | 2024</h4>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Certificates</div>
+          <div class="item">
+            <h3>JavaScript Level 1, 2, 3</h3>
+            <h4>TOFAS - SPRIX / Hiroshima University</h4>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">
+    <i class="fa-solid fa-file-pdf"></i> Download PDF
+  </button>
+
+</body>
+</html>
