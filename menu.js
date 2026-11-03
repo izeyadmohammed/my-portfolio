@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", function() {
+setTimeout(function() {
   const headerWrap = document.querySelector("header .wrap");
-  if (headerWrap) {
+  if (headerWrap && !document.getElementById("mobile-hamburger")) {
     const btn = document.createElement("button");
     btn.className = "mobile-menu-btn";
     btn.id = "mobile-hamburger";
@@ -23,4 +23,4 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
   }
-});
+}, 500); // بنستنى نص ثانية عشان الـ header يتولد
