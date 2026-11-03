@@ -60,6 +60,7 @@ footer { padding: 40px 0; text-align: center; color: var(--muted); font-size: 14
 .admin-item .del-btn { position: absolute; top: 10px; left: 10px; color: red; cursor: pointer; font-weight: 700; background: none; border: none; font-size: 16px; }
 .admin-section-title { font-size: 18px; font-weight: 800; margin-top: 30px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); }
 </style>
+<link rel="stylesheet" href="menu.css">
 </head>
 <body>
 <div id="app"></div>
@@ -392,5 +393,6 @@ async function saveData() {
 
 loadFromSupabase().then(() => render());
 </script>
+<script src="menu.js"></script>
 </body>
 </html>
