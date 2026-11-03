@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 <style>
 :root { --bg: #f7f7fb; --surface: #fff; --text: #14142b; --muted: #5b5b78; --line: #e4e4ef; --accent: #6d4aff; --accent2: #ff5fa2; }
 [data-theme="dark"] { --bg: #0c0c18; --surface: #16162a; --text: #f2f2fb; --muted: #a3a3c2; --line: #2a2a45; }
@@ -177,6 +179,11 @@ function render() {
         <a href="#contact" class="btn primary">${isAr?'تواصل معي':'Contact Me'}</a>
       </div></section>
 
+      <section id="about"><div class="wrap" style="text-align:center">
+        <h2>${isAr?'عني':'About'}</h2>
+        <p style="color:var(--muted);max-width:700px;margin:20px auto;font-size:18px">${tag}</p>
+      </div></section>
+
       <section id="skills" style="background:var(--surface)"><div class="wrap">
         <h2>${isAr?'المهارات':'Skills'}</h2>
         <div class="grid">${D.skills.map(s => `<div class="card"><div class="skill-row"><span>${s.n}</span><span>${s.v}%</span></div><div class="skill-bar"><i style="width:${s.v}%"></i></div></div>`).join('')}</div>
@@ -306,6 +313,8 @@ function renderAdminLists() {
       <input placeholder="الجهة" value="${c.issuer||''}" oninput="D.certs[${i}].issuer=this.value">
       <input placeholder="السنة" value="${c.year||''}" oninput="D.certs[${i}].year=this.value">
       <input placeholder="لينك الصورة أو PDF" value="${c.img||''}" oninput="D.certs[${i}].img=this.value">
+      <label style="font-size:13px;margin-top:8px">أو ارفع ملف PDF/صورة:</label>
+      <input type="file" accept="image/*,application/pdf" onchange="uploadCertFile(event, ${i})">
     </div>`).join('');
   
   // Exp
@@ -327,6 +336,41 @@ function addCert() { D.certs.push({title:"",issuer:"",year:"",img:""}); renderAd
 function delCert(i) { D.certs.splice(i,1); renderAdminLists(); }
 function addExp() { if(!D.exp) D.exp=[]; D.exp.push({role:"",org:"",period:"",desc:""}); renderAdminLists(); }
 function delExp(i) { D.exp.splice(i,1); renderAdminLists(); }
+
+async function uploadCertFile(e, i) {
+  var file = e.target.files[0];
+  if (!file) return;
+  
+  if (file.type === 'application/pdf') {
+    // تحويل PDF لصورة
+    try {
+      var arrayBuffer = await file.arrayBuffer();
+      var pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      var page = await pdf.getPage(1);
+      var viewport = page.getViewport({ scale: 2.0 });
+      var canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      var ctx = canvas.getContext('2d');
+      await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+      D.certs[i].img = dataUrl;
+      renderAdminLists();
+      alert('✅ تم تحويل الـ PDF لصورة! اضغط حفظ عشان تظهر.');
+    } catch (err) {
+      alert('⚠️ خطأ في قراءة PDF: ' + err.message);
+    }
+  } else {
+    // صورة عادية
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      D.certs[i].img = ev.target.result;
+      renderAdminLists();
+      alert('✅ تم رفع الصورة! اضغط حفظ عشان تظهر.');
+    };
+    reader.readAsDataURL(file);
+  }
+}
 
 async function saveData() {
   D.nameAr = document.getElementById('a-name-ar').value;
