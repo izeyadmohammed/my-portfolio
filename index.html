@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 <style>
 :root { --bg: #f7f7fb; --surface: #fff; --text: #14142b; --muted: #5b5b78; --line: #e4e4ef; --accent: #6d4aff; --accent2: #ff5fa2; }
@@ -86,7 +87,51 @@ footer { padding: 40px 0; text-align: center; color: var(--muted); font-size: 14
 </div>
 
 <script>
-var D = JSON.parse(localStorage.getItem('portfolioData')) || {
+// ===== إعدادات سوبابيز =====
+const SUPABASE_URL = 'https://pephaughlgezamtzphkt.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_UzP993xPgfG_cdLb-Lzw8g_byTBa6HF';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// البيانات الافتراضية
+var defaultData = {
+  nameAr: "زياد محمد", nameEn: "Zeyad Mohamed",
+  roleAr: "مطور ويب متكامل", roleEn: "Full-Stack Developer",
+  tagAr: "مطوّر ويب متكامل، ومؤسس منصة شرحتهالك التعليمية.",
+  tagEn: "Full-Stack Developer and Founder of Sharahthalk platform.",
+  image: "", email: "number9138@gmail.com", phone: "01126346329",
+  whatsapp: "https://wa.me/201126346329", github: "https://github.com/izeyadmohammed", linkedin: "",
+  skills: [{n:"JavaScript", v:85}, {n:"HTML & CSS", v:95}, {n:"Supabase / SQL", v:80}, {n:"UI/UX Design", v:75}],
+  projects: [{title:"منصة شرحتهالك", desc:"منصة تعليمية متكاملة (LMS) تدعم المدرسين والطلاب، مع نظام امتحانات محمي ومحفظة إلكترونية.", link:"https://sharh.hostless.site", img:""}],
+  certs: [
+    {title:"JavaScript Level 1 - TOFAS", issuer:"SPRIX / Hiroshima University", year:"2026", img:"images/certificate_0019c865e76c0bbce56f7c63489449985.pdf"},
+    {title:"JavaScript Level 2 - TOFAS", issuer:"SPRIX / Hiroshima University", year:"2026", img:"images/certificate_0019f1439935e43d5207ebbf69d68faaf.pdf"},
+    {title:"JavaScript Level 3 - TOFAS", issuer:"SPRIX / Hiroshima University", year:"2026", img:"images/certificate_0019fb29ada6c37551101d2c21fdf7eba.pdf"}
+  ]
+};
+
+var D = defaultData;
+
+// تحميل البيانات من سوبابيز
+async function loadFromSupabase() {
+  try {
+    const { data, error } = await supabaseClient.from('portfolio_data').select('data').eq('id', 1).single();
+    if (!error && data && data.data && Object.keys(data.data).length > 0) {
+      D = { ...defaultData, ...data.data };
+      console.log('✅ تم تحميل البيانات من سوبابيز');
+    }
+  } catch (e) {
+    console.error('خطأ في تحميل البيانات:', e);
+  }
+}
+
+// حفظ البيانات في سوبابيز
+async function saveToSupabase(data) {
+  const { error } = await supabaseClient.from('portfolio_data').update({ data: data, updated_at: new Date() }).eq('id', 1);
+  if (error) throw new Error(error.message);
+  console.log('✅ تم الحفظ في سوبابيز');
+}
+
+var _oldData = JSON.parse(localStorage.getItem('portfolioData')) || {
   nameAr: "زياد محمد", nameEn: "Zeyad Mohamed",
   roleAr: "مطور ويب متكامل", roleEn: "Full-Stack Developer",
   tagAr: "مطوّر ويب متكامل، ومؤسس منصة شرحتهالك التعليمية.",
@@ -232,7 +277,7 @@ function openAdmin() {
 
 function closeAdmin() { document.getElementById('adminPanel').classList.remove('on'); }
 
-function saveData() {
+async function saveData() {
   D.nameAr = document.getElementById('a-name-ar').value;
   D.nameEn = document.getElementById('a-name-en').value;
   D.roleAr = document.getElementById('a-role-ar').value;
@@ -246,12 +291,19 @@ function saveData() {
   D.github = document.getElementById('a-github').value;
   D.linkedin = document.getElementById('a-linkedin').value;
   localStorage.setItem('portfolioData', JSON.stringify(D));
+  try {
+    await saveToSupabase(D);
+    alert('✅ تم الحفظ في سوبابيز! سيظهر لكل الناس.');
+  } catch (e) {
+    alert('⚠️ فشل الحفظ في سوبابيز: ' + e.message);
+    return;
+  }
   closeAdmin();
   render();
-  alert('✅ تم الحفظ!');
 }
 
-render();
+// تحميل البيانات من سوبابيز ثم رسم الصفحة
+loadFromSupabase().then(() => render());
 </script>
 </body>
 </html>
