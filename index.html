@@ -6,9 +6,33 @@
 <title>Zeyad Mohamed | Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    // Hamburger Menu Logic
+    window.toggleMenu = function() {
+      const nav = document.querySelector('nav');
+      const btn = document.getElementById('hamburger');
+      nav.classList.toggle('active');
+      btn.classList.toggle('active');
+    };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+    // Hamburger Menu Logic
+    window.toggleMenu = function() {
+      const nav = document.querySelector('nav');
+      const btn = document.getElementById('hamburger');
+      nav.classList.toggle('active');
+      btn.classList.toggle('active');
+    };
+</script>
+<script>if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    // Hamburger Menu Logic
+    window.toggleMenu = function() {
+      const nav = document.querySelector('nav');
+      const btn = document.getElementById('hamburger');
+      nav.classList.toggle('active');
+      btn.classList.toggle('active');
+    };
+</script>
 <style>
 :root { --bg: #f7f7fb; --surface: #fff; --text: #14142b; --muted: #5b5b78; --line: #e4e4ef; --accent: #6d4aff; --accent2: #ff5fa2; }
 [data-theme="dark"] { --bg: #0c0c18; --surface: #16162a; --text: #f2f2fb; --muted: #a3a3c2; --line: #2a2a45; }
@@ -59,6 +83,20 @@ footer { padding: 40px 0; text-align: center; color: var(--muted); font-size: 14
 .admin-item { border: 1px solid var(--line); padding: 15px; border-radius: 12px; margin-top: 10px; position: relative; }
 .admin-item .del-btn { position: absolute; top: 10px; left: 10px; color: red; cursor: pointer; font-weight: 700; background: none; border: none; font-size: 16px; }
 .admin-section-title { font-size: 18px; font-weight: 800; margin-top: 30px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); }
+
+    /* Mobile Menu Hamburger */
+    .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 100; }
+    .menu-btn span { display: block; width: 24px; height: 2px; background: var(--text); margin-bottom: 5px; transition: all 0.3s ease-in-out; }
+    .menu-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.active span:nth-child(2) { opacity: 0; }
+    .menu-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    
+    @media (max-width: 768px) {
+      .menu-btn { display: block; }
+      nav { display: none; position: absolute; top: 100%; right: 0; left: 0; background: var(--surface); flex-direction: column; padding: 20px; border-bottom: 1px solid var(--line); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+      nav.active { display: flex; }
+      .tools { margin-right: auto; }
+    }
 </style>
 </head>
 <body>
@@ -164,7 +202,11 @@ function render() {
         <a href="#exp">${isAr?'الخبرات':'Experience'}</a>
         <a href="#contact">${isAr?'تواصل':'Contact'}</a>
       </nav>
-      <div class="tools">
+      
+        <button class="menu-btn" id="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+<div class="tools">
         <button class="btn small" onclick="toggleLang()">${isAr?'EN':'ع'}</button>
         <button class="btn small" onclick="toggleTheme()">🌓</button>
       </div>
@@ -391,6 +433,14 @@ async function saveData() {
 }
 
 loadFromSupabase().then(() => render());
+
+    // Hamburger Menu Logic
+    window.toggleMenu = function() {
+      const nav = document.querySelector('nav');
+      const btn = document.getElementById('hamburger');
+      nav.classList.toggle('active');
+      btn.classList.toggle('active');
+    };
 </script>
 </body>
 </html>
